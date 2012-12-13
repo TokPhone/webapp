@@ -6,6 +6,7 @@ var TBClient = function() {
   var myStream = 'myStream';
   var numStreams = 0;
   var phones = [];
+  var name = '';
 
   var init = function init(sessionId, email) {
     session = TB.initSession(sessionId);
@@ -14,11 +15,28 @@ var TBClient = function() {
     listenEvents(email);
     startTimer();
     startListeners();
+    addInfo();
   };
+
+  var addInfo = function addInfo() {
+	var refURL = document.referrer;
+	var splitURL = refURL.split("&");
+	for (var i=0;i<splitURL.length;i++)
+	{ 
+		if(splitURL[i].indexof("caller_phone") != -1 || splitURL[i].indexof("callee_phone") != -1) {
+  			phones.append(splitURL[i].split("=")[1]);
+		}
+		if(splitURL[i].indexof("name") != -1) {
+			name = splitURL[i].split("=")[1];
+		}
+	}
+  }
 
   var startListeners = function startListeners() {
     var accept = document.getElementById('accept');
     var decline = document.getElementById('decline');
+	var sendToPhone = document.getElementById('sendToPhone');
+    
     var popup = document.getElementById('popup');
     accept.addEventListener('click', function() {
       var http = new XMLHttpRequest();
@@ -27,6 +45,26 @@ var TBClient = function() {
       baseURL += '?url=' + window.location.href;
       baseURL += '&email=' + popup.dataset.email;
       baseURL += '&name=' + popup.dataset.name;
+      http.open("GET", baseURL, true);
+      http.onreadystatechange = function() {
+        if (http.readyState == 4) {
+          console.log(http.responseText);
+        }
+      }
+      http.send();
+      popup.classList.add('hidden');
+    });
+    
+    sendToPhone.addEventListener('click', function() {
+      var http = new XMLHttpRequest();
+      var baseURL = '/sendToPhone';
+      var popup = document.getElementById('popup');
+      
+      baseURL += '?did1=' + phones[0];
+      
+      baseURL += '&did2=' + phones[1];
+      baseURL += '&did3=' + phones[2];
+
       http.open("GET", baseURL, true);
       http.onreadystatechange = function() {
         if (http.readyState == 4) {
