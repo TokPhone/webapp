@@ -191,9 +191,11 @@ var TBClient = function() {
 
   var messageHandler = function messageHandler(msg) {
     var popup = document.getElementById('popup');
+    var photo = document.getElementById('photo');
+    photo.src = 'http://graph.facebook.com/' + msg.fb_id + '/picture?type=large';
     popup.dataset.name = name;
     popup.dataset.email = msg.new_participant;
-    popup.querySelector('span.name').textContent = name + ' is calling you. Would you like to add him to this conversation?';
+    popup.querySelector('span.name').textContent = msg.name + ' is calling you. Would you like to add him to this conversation?';
     popup.classList.remove('hidden');
     phones.push(msg.phone_number);
   };
