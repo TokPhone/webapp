@@ -193,7 +193,7 @@ var TBClient = function() {
     var popup = document.getElementById('popup');
     popup.dataset.name = msg.name;
     popup.dataset.email = msg.new_participant;
-    popup.querySelector('span.name').textContent = msg.name + ' would like to join';
+    popup.querySelector('span.name').textContent = name + ' is calling you. Would you like to add him to this conversation?';
     popup.classList.remove('hidden');
     phones.append(msg.phone_number);
   };
