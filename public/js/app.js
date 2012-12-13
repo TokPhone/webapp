@@ -10,7 +10,45 @@ var TBClient = function() {
     session.addEventListener('sessionConnected', sessionConnectedHandler);
     session.addEventListener('streamCreated', streamCreatedHandler);
     listenEvents(email);
+    startTimer();
+    startListeners();
   };
+
+  var startListeners = function startListeners() {
+    var accept = document.getElementById('accept');
+    var decline = document.getElementById('decline');
+    var popup = document.getElementById('popup');
+    accept.addEventListener('click', function() {
+      popup.classList.add('hidden');
+    });
+
+    decline.addEventListener('click', function() {
+      popup.classList.add('hidden');
+    });
+  };
+
+  var startTimer = function startTimer() {
+    var m = 0;
+    var s =0;
+    // add a zero in front of numbers<10
+    function startTime() {
+      s = (s+1) % 60;
+      if (s == 0)
+        m = (m+1) % 60;
+      var ms=checkTime(m);
+      var ss=checkTime(s);
+      document.getElementById('time').innerHTML=ms+":"+ss;
+      t=setTimeout(function(){startTime()},1000);
+    }
+
+    function checkTime(i) {
+      if (i<10) {
+        i="0" + i;
+      }
+      return i;
+    }
+    startTime();
+  }
 
   var streamCreatedHandler = function streamCreatedHandler(event) {
     // Subscribe to any new streams that are created
@@ -22,7 +60,7 @@ var TBClient = function() {
   };
 
   var sessionConnectedHandler = function sessionConnectedHandler(event) {
-    var publishProps = {height:240, width:320};
+    var publishProps = {height: 200, width: 300};
     publisher = TB.initPublisher(apiKey, myStream, publishProps);
     // Send my stream to the session
     session.publish(publisher);
@@ -40,11 +78,24 @@ var TBClient = function() {
 
       // Create the div to put the subscriber element in to
       var div = document.createElement('div');
+      var streamWidth = window.innerWidth;
+      var streamHeight = window.innerHeight - 120;
+      var container = document.getElementById('container');
+      if (streams.length == 2) {
+        streamWidth = (window.innerWidth / 2.5) - 20;
+        streamHeight = (streamHeight / 2);
+        container.classList.add('two');
+      }
       div.setAttribute('id', 'stream' + streams[i].streamId);
-      document.body.appendChild(div);
+      if (i == 1)
+        div.classList.add('last');
+      if (i == 0)
+        div.classList.add('first');
+      div.classList.add('stream');
+      container.appendChild(div);
 
       // Subscribe to the stream
-      session.subscribe(streams[i], div.id);
+      session.subscribe(streams[i], div.id, {width: streamWidth, height: streamHeight});
     }
   };
 
@@ -62,8 +113,8 @@ var TBClient = function() {
   };
 
   var messageHandler = function messageHandler(msg) {
-    alert(msg);
-    console.log("**** NEW MSG " + msg);
+    var popup = document.getElementById('popup');
+    popup.classList.remove('hidden');
   };
 
   return {
