@@ -19,5 +19,5 @@ get '/sendToPhone' do
   did1 = params[:did1]
   did2 = URI.escape(params[:did2])
   did3 = params[:did3] ? URI.escape(params[:did3]) : ''
-  data = RestClient.post("#{baseUrl}?did1=#{did1}&did2=#{did2}&did3=#{did3}")
+  data = RestClient.post("#{baseUrl}?did1=#{did1}&did2=#{did2}&did3=#{did3}", nil)
 end
