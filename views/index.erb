@@ -1,0 +1,19 @@
+<html>
+<head>
+  <title></title>
+  <script src="http://static.opentok.com/webrtc/v2.0/js/TB.min.js" ></script>
+  <script src="/js/app.js" ></script>
+</head>
+<body>
+  <h1>Hi</h1>
+  <div id="myStream"></div>
+  <div id="pubnub" pub-key="pub-65d61bb5-175f-4030-a368-3ae5f241a6b2" sub-key="sub-a9aabaee-4489-11e2-9510-5108acf0d0ac"></div>
+  <script type="text/javascript">
+  window.addEventListener('load', function() {
+    TBClient.init('<%= params[:sessionId] %>', '<%= params[:email] %>');
+    TBClient.connect('<%= params[:token] %>');
+  });
+</script>
+<script src="http://cdn.pubnub.com/pubnub-3.3.min.js"></script>
+</body>
+</html>
