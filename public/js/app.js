@@ -4,6 +4,7 @@ var TBClient = function() {
   var session = null;
   var publisher = null;
   var myStream = 'myStream';
+  var numStreams = 0;
 
   var init = function init(sessionId, email) {
     session = TB.initSession(sessionId);
@@ -64,18 +65,20 @@ var TBClient = function() {
     publisher = TB.initPublisher(apiKey, myStream, publishProps);
     // Send my stream to the session
     session.publish(publisher);
+    numStreams++;
 
     // Subscribe to streams that were in the session when we connected
     subscribeToStreams(event.streams);
   };
 
   var subscribeToStreams = function subscribeToStreams(streams) {
+    console.log("SUBSCRIBER! " + streams);
     for (var i = 0; i < streams.length; i++) {
       // Make sure we don't subscribe to ourself
       if (streams[i].connection.connectionId == session.connection.connectionId) {
         return;
       }
-
+      numStreams++;
       // Create the div to put the subscriber element in to
       var div = document.createElement('div');
       var streamWidth = window.innerWidth;
@@ -89,13 +92,35 @@ var TBClient = function() {
       div.setAttribute('id', 'stream' + streams[i].streamId);
       if (i == 1)
         div.classList.add('last');
-      if (i == 0)
+      if (i == 0 && numStreams == 2)
         div.classList.add('first');
       div.classList.add('stream');
       container.appendChild(div);
 
       // Subscribe to the stream
       session.subscribe(streams[i], div.id, {width: streamWidth, height: streamHeight});
+
+      if (i == 0 && numStreams == 3)
+        refactorLayout();
+    }
+  };
+
+  var refactorLayout = function refactor() {
+    var container = document.getElementById('container');
+    var streamHeight = window.innerHeight - 120;
+    var streamWidth = (window.innerWidth / 2.5) - 20;
+    streamHeight = (streamHeight / 2);
+    container.classList.add('two');
+    var streams = container.querySelectorAll('.stream');
+    for (var i=0; i < streams.length; i++) {
+      var current = streams[i];
+      if(!current.classList.contains('own')) {
+        var className = (i <= 1) ? 'first' : 'last';
+        current.classList.add(className);
+        current.style.width = streamWidth;
+        current.style.height = streamHeight;
+      }
+
     }
   };
 

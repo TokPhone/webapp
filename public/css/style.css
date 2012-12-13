@@ -107,7 +107,6 @@ section[type="content"] {
 
 .stream {
   display: block;
-  background-color: red;
   position: absolute;
 }
 
@@ -125,7 +124,6 @@ section[type="content"] {
 .stream.own {
   width: 300px;
   height: 200px;
-  background-color: blue;
   top: 60%;
   right: 5%;
   z-index: 10;
