@@ -13,6 +13,7 @@ header {
   height: 60px;
   background-color: #1D1002;
   color: #fff;
+  background: url('/img/tokphonelogo.png') no-repeat #1D1002 30px;
 }
 
 header section[type="actions"] {
