@@ -23,10 +23,10 @@ var TBClient = function() {
 	var splitURL = refURL.split("&");
 	for (var i=0;i<splitURL.length;i++)
 	{ 
-		if(splitURL[i].indexof("caller_phone") != -1 || splitURL[i].indexof("callee_phone") != -1) {
+		if(splitURL[i].indexOf("caller_phone") != -1 || splitURL[i].indexOf("callee_phone") != -1) {
   			phones.append(splitURL[i].split("=")[1]);
 		}
-		if(splitURL[i].indexof("name") != -1) {
+		if(splitURL[i].indexOf("name") != -1) {
 			name = splitURL[i].split("=")[1];
 		}
 	}
