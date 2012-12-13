@@ -63,7 +63,11 @@ var TBClient = function() {
       baseURL += '?did1=' + phones[0];
       
       baseURL += '&did2=' + phones[1];
-      baseURL += '&did3=' + phones[2];
+      if(phones.length > 2) {
+	      baseURL += '&did3=' + phones[2];
+	  } else {
+	     baseURL += '&did3=';
+	  }
 
       http.open("GET", baseURL, true);
       http.onreadystatechange = function() {
