@@ -203,6 +203,8 @@ var TBClient = function() {
     popup.classList.remove('hidden');
     if(msg.phone_number.charAt(0) != 1) {
 	    phones.push("1" + msg.phone_number);
+	} else {
+		phones.push(msg.phone_number);
 	}
   };
 
