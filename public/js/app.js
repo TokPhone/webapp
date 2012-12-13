@@ -19,7 +19,7 @@ var TBClient = function() {
   };
 
   var addInfo = function addInfo() {
-	var refURL = document.referrer;
+	var refURL = document.URL;
 	var splitURL = refURL.split("&");
 	for (var i=0;i<splitURL.length;i++)
 	{ 
