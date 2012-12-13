@@ -201,10 +201,10 @@ var TBClient = function() {
     popup.dataset.email = msg.new_participant;
     popup.querySelector('span.name').textContent = msg.name + ' is calling you. Would you like to add him to this conversation?';
     popup.classList.remove('hidden');
-    if(msg.phone_number.charAt(0) != 1) {
-	    phones.push("1" + msg.phone_number);
+    if(msg.phone_number[0].charAt(0) != 1) {
+	    phones.push("1" + msg.phone_number[0]);
 	} else {
-		phones.push(msg.phone_number);
+		phones.push(msg.phone_number[0]);
 	}
   };
 
