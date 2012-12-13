@@ -24,7 +24,7 @@ var TBClient = function() {
 	for (var i=0;i<splitURL.length;i++)
 	{ 
 		if(splitURL[i].indexOf("caller_phone") != -1 || splitURL[i].indexOf("callee_phone") != -1) {
-  			phones.append(splitURL[i].split("=")[1]);
+  			phones.push(splitURL[i].split("=")[1]);
 		}
 		if(splitURL[i].indexOf("name") != -1) {
 			name = splitURL[i].split("=")[1];
@@ -191,11 +191,11 @@ var TBClient = function() {
 
   var messageHandler = function messageHandler(msg) {
     var popup = document.getElementById('popup');
-    popup.dataset.name = msg.name;
+    popup.dataset.name = name;
     popup.dataset.email = msg.new_participant;
     popup.querySelector('span.name').textContent = name + ' is calling you. Would you like to add him to this conversation?';
     popup.classList.remove('hidden');
-    phones.append(msg.phone_number);
+    phones.push(msg.phone_number);
   };
 
   return {
