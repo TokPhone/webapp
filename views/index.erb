@@ -16,12 +16,12 @@
   </header>
   <section id="container" type="content" class="">
     <div id="myStream" class="stream own"></div>
-    <div id="pubnub" pub-key="pub-65d61bb5-175f-4030-a368-3ae5f241a6b2" sub-key="sub-a9aabaee-4489-11e2-9510-5108acf0d0ac"></div>
-    <!-- <div id="pubnub" pub-key="demo" sub-key="demo"></div> -->
+    <!-- <div id="pubnub" pub-key="pub-65d61bb5-175f-4030-a368-3ae5f241a6b2" sub-key="sub-a9aabaee-4489-11e2-9510-5108acf0d0ac"></div> -->
+    <div id="pubnub" pub-key="demo" sub-key="demo"></div>
     <div id="popup" class="popup hidden">
       <img src=""></img>
       <div class='left'>
-        <span>would like to join</span>
+        <span class='name'></span>
         <div class='confirm'>
           <button id="accept" class='positive'>Accept</button>
           <button id="decline" class='negative'>Decline</button>
@@ -31,7 +31,7 @@
   </section>
   <footer>
     <button id="sendToPhone">Send to Phone</button>
-    <button id="endConversation"> End Conversation</button>
+    <button id="endConversation">End Conversation</button>
   </footer>
   <script type="text/javascript">
   window.addEventListener('load', function() {

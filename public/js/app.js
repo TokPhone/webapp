@@ -5,6 +5,7 @@ var TBClient = function() {
   var publisher = null;
   var myStream = 'myStream';
   var numStreams = 0;
+  var phones = [];
 
   var init = function init(sessionId, email) {
     session = TB.initSession(sessionId);
@@ -20,6 +21,19 @@ var TBClient = function() {
     var decline = document.getElementById('decline');
     var popup = document.getElementById('popup');
     accept.addEventListener('click', function() {
+      var http = new XMLHttpRequest();
+      var baseURL = '/invite';
+      var popup = document.getElementById('popup');
+      baseURL += '?url=' + window.location.href;
+      baseURL += '&email=' + popup.dataset.email;
+      baseURL += '&name=' + popup.dataset.name;
+      http.open("GET", baseURL, true);
+      http.onreadystatechange = function() {
+        if (http.readyState == 4) {
+          console.log(http.responseText);
+        }
+      }
+      http.send();
       popup.classList.add('hidden');
     });
 
@@ -139,7 +153,11 @@ var TBClient = function() {
 
   var messageHandler = function messageHandler(msg) {
     var popup = document.getElementById('popup');
+    popup.dataset.name = msg.name;
+    popup.dataset.email = msg.new_participant;
+    popup.querySelector('span.name').textContent = msg.name + ' would like to join';
     popup.classList.remove('hidden');
+    phones.append(msg.phone_number);
   };
 
   return {
