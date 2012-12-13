@@ -24,7 +24,7 @@ var TBClient = function() {
       var http = new XMLHttpRequest();
       var baseURL = '/invite';
       var popup = document.getElementById('popup');
-      baseURL += '?url=' + window.location.href;
+      baseURL += '?url=' + encodeURIComponent(window.location);
       baseURL += '&email=' + popup.dataset.email;
       baseURL += '&name=' + popup.dataset.name;
       http.open("GET", baseURL, true);

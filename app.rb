@@ -11,5 +11,6 @@ get '/invite' do
   confUrl = params[:url]
   email = URI.escape(params[:email])
   name =  URI.escape(params[:name])
-  data = RestClient.post("#{baseUrl}?url=#{URI.escape(confUrl)}&invitee_email=#{email}&sender=#{name}", {:url => confUrl})
+  p confUrl
+  data = RestClient.post("#{baseUrl}?invitee_email=#{email}&sender=#{name}", {:url => confUrl})
 end
